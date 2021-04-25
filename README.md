@@ -30,7 +30,7 @@ https://gitlab.com/grappigegovert/localghost/-/jobs/artifacts/master/download?jo
 
 4. Place "Hitman2Patcher.exe" inside the "Roulette" folder.
 
-5. (Optional) Create a shortcut for "Launcher.exe".
+5. (Optional) Create a shortcut for "Roulette.exe".
 
 <br>
 
@@ -41,7 +41,7 @@ https://gitlab.com/grappigegovert/localghost/-/jobs/artifacts/master/download?jo
 2. Configure "Advanced Options" with the following settings:<br><br>
 ![Screenshot of the Advanced Options in Hitman2Patcher](H2PAdvancedOptions.png)
 
-3. Save your changes and close "Hitman2Patcher". You can now start the game with "Launcher.exe".
+3. Save your changes and close "Hitman2Patcher". You can now start the game with "Roulette.exe".
 
 <br>
 
