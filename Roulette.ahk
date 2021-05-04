@@ -6,14 +6,22 @@
 	the launcher will close automatically after a few seconds.
 */
 
-#NoTrayIcon
 #SingleInstance Force
 #NoEnv
-SendMode Input
 #Persistent
-SetWorkingDir %A_ScriptDir%
 #WinActivateForce
+SetWorkingDir %A_ScriptDir%
 DetectHiddenWindows, On
+
+; Tray Menu
+Menu, Tray, NoStandard
+Menu, Tray, Add, Exit, TrayExit
+Menu, Tray, Tip, HITMAPS™ Roulette Launcher
+
+TrayExit()
+{
+	ExitApp
+}
 
 ; Hitman2Patcher needs elevated rights to run.
 If ( not A_IsAdmin )
@@ -26,13 +34,29 @@ If ( not A_IsAdmin )
 
 OnExit( "ExitFunc" )
 
+If !FileExist( "Hitman2Patcher.exe" )
+{
+	MsgBox, 016, Error, Hitman2Patcher.exe must be located in:`n"\HITMAN3\Roulette\Hitman2Patcher.exe"`n`nPress OK to close the launcher.
+	IfMsgBox OK
+		ExitApp
+}
+
 SetTimer, CheckIfRunning, 300000 ; Initial run check for HITMAN3.exe or Hitman2Patcher.exe.
 
 If ( ProcessExist( "Hitman2Patcher.exe" ) ) ; Avoids opening a second instance of Hitman2Patcher when launching.
 	Process, Close, Hitman2Patcher.exe
 
 If ( !ProcessExist( "HITMAN3.exe" ) )
-	Run, %A_ScriptDir%\..\Retail\HITMAN3.exe ; Starts HITMAN 3.
+{
+	Try
+		Run, %A_ScriptDir%\..\Retail\HITMAN3.exe ; Starts HITMAN 3.
+	Catch
+	{
+		MsgBox, 016, Error, Roulette.exe must be located in:`n"\HITMAN3\Roulette\Roulette.exe"`n`nPress OK to close the launcher.
+		IfMsgBox OK
+			ExitApp
+	}
+}
 
 SetTimer, checkStartup, 250 ; Checks if HITMAN 3 has started.
 
