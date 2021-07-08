@@ -2,7 +2,7 @@
 	HITMAPS™ Roulette Launcher by tuglaw
 	
 	This launcher runs as a background process in Windows.
-	If HITMAN3.exe or Hitman2Patcher.exe aren't running,
+	If HITMAN3.exe or LocalGhostPatcher.exe aren't running,
 	the launcher will close automatically after a few seconds.
 */
 
@@ -23,7 +23,7 @@ TrayExit()
 	ExitApp
 }
 
-; Hitman2Patcher needs elevated rights to run.
+; LocalGhostPatcher needs elevated rights to run.
 If ( not A_IsAdmin )
 {
 	Try
@@ -34,17 +34,17 @@ If ( not A_IsAdmin )
 
 OnExit( "ExitFunc" )
 
-If !FileExist( "Hitman2Patcher.exe" )
+If !FileExist( "LocalGhostPatcher.exe" )
 {
-	MsgBox, 016, Error, Hitman2Patcher.exe must be located in:`n"\HITMAN3\Roulette\Hitman2Patcher.exe"`n`nPress OK to close the launcher.
+	MsgBox, 016, Error, LocalGhostPatcher.exe must be located in:`n"\HITMAN3\Roulette\LocalGhostPatcher.exe"`n`nPress OK to close the launcher.
 	IfMsgBox OK
 		ExitApp
 }
 
-SetTimer, CheckIfRunning, 300000 ; Initial run check for HITMAN3.exe or Hitman2Patcher.exe.
+SetTimer, CheckIfRunning, 300000 ; Initial run check for HITMAN3.exe or LocalGhostPatcher.exe.
 
-If ( ProcessExist( "Hitman2Patcher.exe" ) ) ; Avoids opening a second instance of Hitman2Patcher when launching.
-	Process, Close, Hitman2Patcher.exe
+If ( ProcessExist( "LocalGhostPatcher.exe" ) ) ; Avoids opening a second instance of LocalGhostPatcher when launching.
+	Process, Close, LocalGhostPatcher.exe
 
 If ( !ProcessExist( "HITMAN3.exe" ) )
 {
@@ -76,9 +76,9 @@ checkStartup()
 		#IfWinActive, ahk_exe HITMAN3.exe
 		{
 			SetTimer, checkStartup, Off ; Stops checking if HITMAN 3 has started.
-			If ( !ProcessExist( "Hitman2Patcher.exe" ) )
+			If ( !ProcessExist( "LocalGhostPatcher.exe" ) )
 			{
-				Run, Hitman2Patcher.exe,, Min
+				Run, LocalGhostPatcher.exe,, Min
 				SetTimer, CheckIfRunning, 6000 ; Change run check timer.
 			}
 			Return
@@ -97,8 +97,8 @@ checkStartup()
 
 CheckIfRunning()
 {
-	If (  ProcessExist( "Hitman2Patcher.exe" ) && !ProcessExist( "HITMAN3.exe" ) )
-	|| ( !ProcessExist( "Hitman2Patcher.exe" ) && !ProcessExist( "HITMAN3.exe" ) )
+	If (  ProcessExist( "LocalGhostPatcher.exe" ) && !ProcessExist( "HITMAN3.exe" ) )
+	|| ( !ProcessExist( "LocalGhostPatcher.exe" ) && !ProcessExist( "HITMAN3.exe" ) )
 		ExitApp
 }
 
@@ -108,8 +108,8 @@ ProcessExist( Name )
 	Return Errorlevel
 }
 
-ExitFunc() ; Closes Hitman2Patcher when the Roulette Launcher closes.
+ExitFunc() ; Closes LocalGhostPatcher when the Roulette Launcher closes.
 {
-	If ( ProcessExist( "Hitman2Patcher.exe" ) )
-		Process, Close, Hitman2Patcher.exe
+	If ( ProcessExist( "LocalGhostPatcher.exe" ) )
+		Process, Close, LocalGhostPatcher.exe
 }
